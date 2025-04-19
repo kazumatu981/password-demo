@@ -82,6 +82,7 @@ export class PasswordValidationProvider {
             this._timer = undefined;
         }
         // 初期表示
+        this._currentTick = 0;
         this._refreshCommonWord();
         this.onTick(this);
 

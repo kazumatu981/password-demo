@@ -13,11 +13,10 @@
         <main>
             <section id="hacker-section">
                 <h2>共通の言葉</h2>
-                <div id="word-display"></div>
                 <div>
                     <input
                         type="text"
-                        id="common-word-input"
+                        id="salt-input"
                         placeholder="サーバから共通の言葉をもらってください。"
                     />
                 </div>
@@ -29,11 +28,11 @@
                     id="password-input"
                     placeholder="パスワードを入力してください"
                 />
-                <button id="validate-button">検証</button>
-                <div id="validation-result"></div>
+                <button id="hash-button">ハッシュ化</button>
+                <div id="hashed-result"></div>
             </section>
         </main>
 
-        <script src="./scripts/server.bundle.js"></script>
+        <script src="./scripts/client.bundle.js"></script>
     </body>
 </html>
