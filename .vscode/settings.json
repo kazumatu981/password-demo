@@ -1,4 +1,14 @@
 {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                // Match all .json files except for ones in
+                // .vscode directory
+                "match": "static\\\\.*$",
+                "cmd": "npm run build:copy-static"
+            }
+        ]
+    }
 }

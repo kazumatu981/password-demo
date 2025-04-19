@@ -4,8 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "prebuild": "npm run build:copy-static",
-        "build": "echo 'Building...'",
+        "build": "npm run build:release ",
+        "build:release": "webpack --mode production && npm run build:copy-static",
+        "build:debug": "webpack --mode development && npm run build:copy-static",
+        "build:watch": "webpack --mode development --watch",
         "build:copy-static": "node bin/copy-static.js"
     },
     "repository": {
@@ -22,7 +24,10 @@
     "homepage": "https://github.com/kazumatu981/password-demo#readme",
     "devDependencies": {
         "@types/node": "^22.14.1",
-        "typescript": "^5.8.3"
+        "ts-loader": "^9.5.2",
+        "typescript": "^5.8.3",
+        "webpack": "^5.99.6",
+        "webpack-cli": "^6.0.1"
     }
 }
 

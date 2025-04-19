@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="mystyle.css" />
+        <title>サーバ画面</title>
+    </head>
+    <body>
+        <header>
+            <h1>サーバ画面</h1>
+        </header>
+        <main>
+            <section id="password-storage">
+                <h2>パスワードを入力してもらう</h2>
+                <input
+                    type="text"
+                    id="password-input"
+                    placeholder="パスワードを入力してください"
+                />
+                <button id="save-button">保存</button>
+                <div id="hashed-password-display"></div>
+            </section>
+            <section id="hacker-section">
+                <h2>共通の言葉</h2>
+                <div id="word-display"></div>
+                <div>
+                    <span id="time-display"></span>
+                    <button id="hard-refresh-button">ハードリフレッシュ</button>
+                </div>
+            </section>
+            <section id="validate-section">
+                <h2>パスワードの検証</h2>
+                <p>クライアントから教えてもらった値と比較してください。</p>
+                <div id="validation-result">
+                    <span id="salted-hashed-password-display"></span>
+                </div>
+            </section>
+        </main>
+
+        <script src="./scripts/server.bundle.js"></script>
+    </body>
+</html>

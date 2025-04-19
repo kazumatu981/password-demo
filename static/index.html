@@ -3,26 +3,40 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>My Web Page</title>
+        <link rel="stylesheet" href="mystyle.css" />
+        <title>パスワード認証体験</title>
     </head>
     <body>
         <header>
-            <h1>Welcome to My Web Page</h1>
+            <h1>パスワード認証体験</h1>
         </header>
         <main>
             <section>
-                <h2>About Me</h2>
-                <p>This is a simple web page created as an example.</p>
+                <h2>概要</h2>
+                <p>
+                    パスワード認証を体験できます。必ず二人以上で体験してください。
+                </p>
             </section>
             <section>
-                <h2>Contact</h2>
-                <p>If you have any questions, feel free to reach out!</p>
+                <h2>役割決め</h2>
+                <p>
+                    参加者二人のうち一人が「サーバ」役、もう一人が「クライアント」役を担当します。
+                    それ以外の人は「ハッカー」役を担当します。
+                </p>
             </section>
-            <section id="dynamic-content">
-                <h2>Dynamic Content</h2>
-                <p>This content will be updated dynamically.</p>
-                <button id="update-button">Update Content</button>
-            </section>
+            <div class="role-selection">
+                <section class="role-item">
+                    <h2>サーバ役</h2>
+                    <p>
+                        <a href="./server.html">サーバ画面</a>
+                        を開いてください。
+                    </p>
+                </section>
+                <section class="role-item">
+                    <h2>クライアント役</h2>
+                    <p>クライアント画面を開いてください。</p>
+                </section>
+            </div>
         </main>
     </body>
 </html>

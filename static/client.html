@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="mystyle.css" />
+        <title>クライアント画面</title>
+    </head>
+    <body>
+        <header>
+            <h1>クライアント画面</h1>
+        </header>
+        <main>
+            <section id="hacker-section">
+                <h2>共通の言葉</h2>
+                <div id="word-display"></div>
+                <div>
+                    <input
+                        type="text"
+                        id="common-word-input"
+                        placeholder="サーバから共通の言葉をもらってください。"
+                    />
+                </div>
+            </section>
+            <section id="validate-section">
+                <h2>パスワード</h2>
+                <input
+                    type="text"
+                    id="password-input"
+                    placeholder="クライアントからもらった値を入力してください"
+                />
+                <button id="validate-button">検証</button>
+                <div id="validation-result"></div>
+            </section>
+        </main>
+
+        <script src="./scripts/server.bundle.js"></script>
+    </body>
+</html>
