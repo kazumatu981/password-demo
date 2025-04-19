@@ -1,0 +1,28 @@
+{
+    "name": "password-demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "prebuild": "npm run build:copy-static",
+        "build": "echo 'Building...'",
+        "build:copy-static": "node bin/copy-static.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kazumatu981/password-demo.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "type": "module",
+    "bugs": {
+        "url": "https://github.com/kazumatu981/password-demo/issues"
+    },
+    "homepage": "https://github.com/kazumatu981/password-demo#readme",
+    "devDependencies": {
+        "@types/node": "^22.14.1",
+        "typescript": "^5.8.3"
+    }
+}
+
