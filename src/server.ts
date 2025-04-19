@@ -49,10 +49,11 @@ function onHardRefreshButtonClick() {
 function onSaveButtonClick() {
     // 保存ボタンがクリックされたときの処理
     try {
-        provider.password =
-            (
-                document.getElementById('password-input') as HTMLInputElement
-            )?.value?.trim() ?? '';
+        const passwordInput = document.getElementById(
+            'password-input',
+        ) as HTMLInputElement;
+        provider.password = passwordInput.value?.trim() ?? '';
+        passwordInput.value = ''; // 入力フィールドをクリア
     } catch (error) {
         if (error instanceof Error) {
             alert('error: ' + error.message);
