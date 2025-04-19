@@ -27,13 +27,13 @@ export function easyHashNoDecode(input: string): number[] {
 }
 
 export function saltize(hashedPassword: number[], salt: string): number[] {
+    const cloned = [...hashedPassword];
     const encodedSalt = encodeWord(salt);
     const saltHash = easyHashCore(encodedSalt, defaultHashOptions);
-    for (let i = 0; i < hashedPassword.length; i++) {
-        hashedPassword[i] =
-            (hashedPassword[i] + saltHash[i]) % validCharacter.length;
+    for (let i = 0; i < cloned.length; i++) {
+        cloned[i] = (cloned[i] + saltHash[i]) % validCharacter.length;
     }
-    return hashedPassword;
+    return cloned;
 }
 
 function __safeRef(input: number[], position: number): number {
@@ -45,11 +45,13 @@ function __safeRef(input: number[], position: number): number {
 }
 
 function easyHashCore(input: number[], option: HashOptions): number[] {
+    console.log(input);
     const seeds = option.seeds ?? Array.from({ length: 5 }, (_, i) => i + 1);
     const modulus = option.modulus ?? 100;
     const hash: number[] =
-        option.initialVector ??
-        Array.from({ length: defaultHashLength }, (_, i) => 0);
+        option.initialVector === undefined
+            ? Array.from({ length: defaultHashLength }, (_, i) => 0)
+            : [...option.initialVector];
     for (let i = 0; i < input.length; i++) {
         let hashValue = 0;
         for (let j = 0; j < seeds.length; j++) {

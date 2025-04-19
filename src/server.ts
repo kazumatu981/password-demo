@@ -1,6 +1,6 @@
 import { PasswordValidationProvider } from './password-validation-provider';
 
-const refreshInterval = 60; // リフレッシュ間隔（秒）
+const refreshInterval = 30; // リフレッシュ間隔（秒）
 const provider = new PasswordValidationProvider({
     refreshInterval,
 });
