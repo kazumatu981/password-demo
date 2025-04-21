@@ -16,6 +16,8 @@ const INTERVAL = 30;
 window.onload = () => {
     // ビューモデルを作成する
     const model = new ServerViewModel();
+    let currentCommonKeyword: string;
+    let currentHashedPassword: string;
 
     // 時間経過した場合
     function onTick(time: number) {
