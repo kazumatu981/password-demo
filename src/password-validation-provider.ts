@@ -1,5 +1,5 @@
-import { commonWords } from './common-words';
-import { areValid, decodeWord } from './character';
+import { commonWords } from './data/common-words';
+import { areValid, decodeWord } from './data/character';
 import { easyHashNoDecode, saltize } from './hash';
 
 interface PasswordValidationProviderOptions {

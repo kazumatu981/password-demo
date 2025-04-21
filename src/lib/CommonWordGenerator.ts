@@ -1,7 +1,7 @@
 import { __assert } from './core/Exceptions';
 import { RandomGenerator } from './core/RandomGenerator';
 
-interface CommonWordGeneratorOptions {
+export interface CommonWordGeneratorOptions {
     seed: number; // 乱数生成のシード値 (0 < seed < 1)
     dictionary: string[]; // 辞書の単語リスト
     autoGenerate?: boolean; // 自動生成フラグ (デフォルト: false)

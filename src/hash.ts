@@ -1,4 +1,4 @@
-import { encodeWord, validCharacter, decodeWord } from './character';
+import { encodeWord, validCharacter, decodeWord } from './data/character';
 interface HashOptions {
     seeds?: number[];
     initialVector?: number[];
