@@ -34,6 +34,8 @@ export class CommonWordGenerator {
         this._autoGenerate = options.autoGenerate ?? false;
         if (this._autoGenerate) {
             this._interval = options.interval ?? DEFAULT_INTERVAL;
+            this.onTick = options.onTick;
+            this.onGenerate = options.onGenerate;
             // 自動生成フラグが true の場合、タイマーで単語を生成する
             this._restartAutoGenerate();
         }
@@ -94,14 +96,15 @@ export class CommonWordGenerator {
     private _restartAutoGenerate() {
         this._stopAutoGenerate();
         this._initialize();
+        this.onTick!(this._currentTick);
         this._currentTick = 0;
-        this.onGenerate?.call(undefined, this._getNextWord());
+        this.onGenerate!(this._getNextWord());
         this._timer = setInterval(() => {
             this._currentTick++;
-            this.onTick?.call(undefined, this._currentTick);
+            this.onTick!(this._currentTick);
             if (this._currentTick >= this._interval!) {
                 this._currentTick = 0;
-                this.onGenerate?.call(undefined, this._getNextWord());
+                this.onGenerate!(this._getNextWord());
             }
         }, 1000);
     }

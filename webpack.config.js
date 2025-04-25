@@ -4,8 +4,8 @@ const __projectRoot = process.cwd(); // __dirnameはNode.jsのグローバル変
 
 export default {
     entry: {
-        client: './src/client.ts',
-        server: './src/server.ts',
+        server_level1: './src/Level1Server.ts',
+        client_level1: './src/Level1Client.ts',
     },
     output: {
         filename: '[name].bundle.js',

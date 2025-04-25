@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../mystyle.css" />
+        <title>ログイン</title>
+    </head>
+    <body>
+        <h1>ログイン</h1>
+        <div class="crumTrail">
+            <a href="../index.html"><span class="crum">Top</span></a>
+            &gt;
+            <a href="./index.html"><span class="crum">level2</span></a>
+            &gt;
+            <span class="crum">ログイン</span>
+        </div>
+        <hr />
+        <div class="login-form">
+            <label for="username-input">ユーザ名:</label>
+            <input type="text" id="username-input" placeholder="ユーザ名" />
+            <label for="password-input">パスワード:</label>
+            <input type="text" id="password-input" placeholder="パスワード" />
+        </div>
+        <button id="login-button">ログイン</button>
+        <hr />
+        <button id="show-sending-message-button">送信メッセージを表示</button>
+        <div id="sending-message-view" class="hidden">test</div>
+        <hr class="bottom-line" />
+        <div class="copy-right">
+            © 2025 Matsumoto Kazuyoshi. All rights reserved.
+        </div>
+        <script src="../scripts/client_level1.bundle.js"></script>
+    </body>
+</html>
