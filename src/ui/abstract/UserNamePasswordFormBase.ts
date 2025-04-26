@@ -1,0 +1,54 @@
+import { __assertUserPasswordInput, __safeRef } from '../common/UiUtil';
+
+export interface UserNamePassword {
+    name: string;
+    password: string;
+}
+
+export abstract class UserNamePasswordFormBase {
+    abstract readonly ID_USER_NAME_INPUT: string;
+    abstract readonly ID_PASSWORD_INPUT: string;
+    abstract readonly ID_SUBMIT_BUTTON: string;
+
+    constructor() {
+        this._registerButtonEvent();
+    }
+
+    public get userNamePassword(): UserNamePassword {
+        return {
+            name: this.userName,
+            password: this.password,
+        };
+    }
+    /**
+     * ユーザ名を取得します
+     */
+    public get userName(): string {
+        const element = __safeRef<HTMLInputElement>(this.ID_USER_NAME_INPUT);
+        return element!.value;
+    }
+    /**
+     * パスワードを取得します
+     */
+    public get password(): string {
+        const element = __safeRef<HTMLInputElement>(this.ID_PASSWORD_INPUT);
+        return element!.value;
+    }
+
+    /**
+     * 登録やログインをクリックしたときのイベントを登録します
+     */
+    private _registerButtonEvent(): void {
+        const element = __safeRef<HTMLButtonElement>(this.ID_SUBMIT_BUTTON);
+        element!.addEventListener('click', () => {
+            __assertUserPasswordInput(this.userName, this.password);
+            this.onSubmit(this.userNamePassword);
+        });
+    }
+    /**
+     * 登録やログインをクリックしたとき
+     * @param userName ユーザ名
+     * @param password パスワード
+     */
+    abstract onSubmit(userNamePassword: UserNamePassword): void;
+}
