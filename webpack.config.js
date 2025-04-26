@@ -6,6 +6,9 @@ export default {
     entry: {
         server_level1: './src/Level1Server.ts',
         client_level1: './src/Level1Client.ts',
+        server_level2: './src/Level2Server.ts',
+        client_level2: './src/Level2Client.ts',
+        server_level3: './src/Level3Server.ts',
     },
     output: {
         filename: '[name].bundle.js',

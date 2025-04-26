@@ -16,6 +16,9 @@
             <span class="crum">ユーザ情報管理サーバ</span>
         </div>
         <hr />
+        <h2>ランダムなあいことば</h2>
+        <button id="get-random-quote-button">取得</button>
+        <div id="random-quote-view"></div>
         <h2>登録ユーザ</h2>
         <div>
             <table id="user-table">
@@ -23,6 +26,7 @@
                     <tr>
                         <th>ユーザ名</th>
                         <th>パスワードハッシュ</th>
+                        <th>難読化ハッシュ</th>
                     </tr>
                 </thead>
                 <tbody id="user-table-body"></tbody>
@@ -42,6 +46,6 @@
         <div class="copy-right">
             © 2025 Matsumoto Kazuyoshi. All rights reserved.
         </div>
-        <script src="../scripts/server_level2.bundle.js"></script>
+        <script src="../scripts/server_level3.bundle.js"></script>
     </body>
 </html>

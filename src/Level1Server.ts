@@ -1,14 +1,10 @@
-import { __assert } from './lib/core/Exceptions';
+import { _assertUserPasswordInput } from './UiUtil';
 import {
     ServerViewModelLevel1,
     type UserPassword,
 } from './view-model/ServerViewModelLevel1';
-import { CharacterEncoder } from './lib/core/CharacterEncoder';
-import { validCharacter } from './data/character';
 
-CharacterEncoder.validCharacter = validCharacter;
-
-const userDb: UserPassword[] = [
+const defaultUserDb: UserPassword[] = [
     {
         name: 'たろう',
         password: 'ももがすき',
@@ -22,27 +18,30 @@ const userDb: UserPassword[] = [
         password: 'かめをたすけた',
     },
 ];
-window.onload = () => {
-    const model = new ServerViewModelLevel1();
-    model.onRegister = (userName: string, password: string) => {
+
+class Level1Server {
+    private _model: ServerViewModelLevel1;
+    private _userDb: UserPassword[];
+    constructor(userDb: UserPassword[]) {
+        this._userDb = userDb;
+        this._model = new ServerViewModelLevel1();
+        this.initialize();
+    }
+
+    public initialize() {
+        this._model.onRegister = this._onRegister.bind(this);
+        this._updateTable();
+    }
+
+    private _onRegister(userName: string, password: string) {
         try {
-            __assert(userName.length !== 0, 'ユーザ名を指定してください');
-            __assert(
-                CharacterEncoder.areValidCharacters(userName),
-                'ユーザ名が不正です',
-            );
-            __assert(password.length !== 0, 'ユーザ名を指定してください');
-            __assert(
-                CharacterEncoder.areValidCharacters(password),
-                'パスワードが不正です',
-            );
-            userDb.push({
+            _assertUserPasswordInput(userName, password);
+            this._appendUser({
                 name: userName,
                 password,
             });
-            model.renderUserTable(userDb);
-            model.clearUserName();
-            model.clearPassword();
+            this._updateTable();
+            this._clearInput();
         } catch (e) {
             const error = e as Error;
             if (error) {
@@ -51,6 +50,21 @@ window.onload = () => {
                 throw e;
             }
         }
-    };
-    model.renderUserTable(userDb);
+    }
+
+    private _appendUser(user: UserPassword) {
+        this._userDb.push(user);
+    }
+    private _updateTable() {
+        this._model.renderUserTable(this._userDb);
+    }
+    private _clearInput() {
+        this._model.clearUserName();
+        this._model.clearPassword();
+    }
+}
+
+window.onload = () => {
+    const sever = new Level1Server(defaultUserDb);
+    sever.initialize();
 };
