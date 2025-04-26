@@ -10,10 +10,19 @@ export abstract class UserNamePasswordFormBase {
     abstract readonly ID_PASSWORD_INPUT: string;
     abstract readonly ID_SUBMIT_BUTTON: string;
 
+    /**
+     * コンストラクター
+     * ユーザ名やパスワードの入力欄を監視して、ボタンを
+     * クリックされたときのイベントハンドラを追加します
+     */
     constructor() {
         this._registerButtonEvent();
     }
 
+    /**
+     * ユーザ名やパスワードを組み合わせたオブジェクトを取得します
+     * @returns {UserNamePassword} ユーザ名とパスワードを組み合わせたオブジェクト
+     */
     public get userNamePassword(): UserNamePassword {
         return {
             name: this.userName,
