@@ -12,8 +12,9 @@ h1 {
     /* 余白の調整 */
     padding: 0.1em 0.5em;
     margin-top: 0.5em;
-    margin-bottom: 2em;
+    margin-bottom: 0;
 }
+
 /*
  *　見出し2
  */
@@ -87,6 +88,15 @@ button:hover {
  * カスタムスタイル
  * ******************************************************** */
 /**
+ * ナビゲーションバー
+ */
+div.crumTrail {
+    font-size: small;
+    /* 余白の調整 */
+    padding: 0.1em 0.5em;
+    margin-bottom: 0;
+}
+/**
  * 警告の見出し
  */
 h2.warning {
@@ -94,12 +104,21 @@ h2.warning {
     border-left: crimson solid 1em;
     border-bottom: crimson solid 0.1em;
 }
+
+/**
+ * コンテンツの分離線
+ */
+hr.contents-divider {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
 /**
  * コンテンツ終了後の線
  */
 hr.bottom-line {
     margin-top: 3em;
 }
+
 /**
  * コピーライト
  */
@@ -117,16 +136,24 @@ div.login-form {
     display: flex;
     flex-direction: column;
     align-items: left;
+    gap: 0.5em;
+}
+div.login-form-item {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
 }
 div.login-form label {
     font-size: small;
 }
 
-.hidden {
-    display: none;
-}
-.shown {
-    display: block;
+pre#sending-message-view {
+    border: lightgray solid 1px;
+    border-radius: 1em;
+    font-family: monospace;
+    margin: 1em;
+    padding: 1em;
 }
 
 div.link-container {

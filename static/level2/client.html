@@ -4,32 +4,68 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../mystyle.css" />
+        <script
+            src="https://kit.fontawesome.com/df9e5b1dd2.js"
+            crossorigin="anonymous"
+        ></script>
         <title>ログイン</title>
     </head>
     <body>
-        <h1>ログイン</h1>
+        <!-- タイトル -->
+        <h1>
+            <i class="fa-solid fa-laptop-code"></i>
+            ログイン
+            <small>level 2</small>
+        </h1>
+
+        <!-- ナビゲーション -->
         <div class="crumTrail">
             <a href="../index.html"><span class="crum">Top</span></a>
             &gt;
-            <a href="./index.html"><span class="crum">level2</span></a>
+            <a href="./index.html"><span class="crum">level 2</span></a>
             &gt;
             <span class="crum">ログイン</span>
         </div>
-        <hr />
+        <hr class="contents-divider" />
+
+        <!-- ログインフォーム -->
         <div class="login-form">
-            <label for="username-input">ユーザ名:</label>
-            <input type="text" id="username-input" placeholder="ユーザ名" />
-            <label for="password-input">パスワード:</label>
-            <input type="text" id="password-input" placeholder="パスワード" />
+            <div class="login-form-item">
+                <label for="username-input">ユーザ名:</label>
+                <input type="text" id="username-input" placeholder="ユーザ名" />
+            </div>
+            <div class="login-form-item">
+                <label for="password-input">パスワード:</label>
+                <input
+                    type="text"
+                    id="password-input"
+                    placeholder="パスワード"
+                />
+            </div>
         </div>
         <button id="login-button">ログイン</button>
-        <hr />
-        <button id="show-sending-message-button">送信メッセージを表示</button>
-        <div id="sending-message-view" class="hidden">test</div>
+        <hr class="contents-divider" />
+
+        <!-- サーバに送信するメッセージ -->
+        <div>
+            <div>
+                ログインボタンをクリックするとサーバに以下のようなメッセージが送付されます。
+            </div>
+            <pre id="sending-message-view">
+{
+    "username": "ユーザ名",
+    "password": "パスワード"
+}
+            </pre>
+        </div>
         <hr class="bottom-line" />
+
+        <!-- コピーライト -->
         <div class="copy-right">
             © 2025 Matsumoto Kazuyoshi. All rights reserved.
         </div>
+
+        <!-- import script bundle -->
         <script src="../scripts/client_level2.bundle.js"></script>
     </body>
 </html>
