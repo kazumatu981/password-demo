@@ -5,7 +5,32 @@ import {
 } from './UserNamePasswordFormBase';
 
 export abstract class ClientBase extends UserNamePasswordFormBase {
-    abstract readonly ID_SENDING_MESSAGE_VIEW: string;
+    get ID_SENDING_MESSAGE_VIEW(): string {
+        return 'sending-message-view';
+    }
+    get ID_USER_NAME_INPUT(): string {
+        return 'username-input';
+    }
+    get ID_PASSWORD_INPUT(): string {
+        return 'password-input';
+    }
+    get ID_SUBMIT_BUTTON(): string {
+        return 'login-button';
+    }
+
+    /**
+     * サーバに送信するメッセージを設定します
+     * @param message メッセージ
+     */
+    set sendingMessage(message: string) {
+        const element = __safeRef<HTMLDivElement>(this.ID_SENDING_MESSAGE_VIEW);
+        element!.innerText = message;
+    }
+
+    constructor() {
+        super();
+        this.sendingMessage = '';
+    }
 
     /**
      * サーバに送信するメッセージを生成して、ID_SENDING_MESSAGE_VIEW要素に
@@ -14,8 +39,7 @@ export abstract class ClientBase extends UserNamePasswordFormBase {
      */
     onSubmit(userNamePassword: UserNamePassword): void {
         const message = this.encodeToMessage(userNamePassword);
-        const element = __safeRef<HTMLDivElement>(this.ID_SENDING_MESSAGE_VIEW);
-        element!.innerText = message;
+        this.sendingMessage = message;
     }
     abstract encodeToMessage(userNamePassword: UserNamePassword): string;
 }

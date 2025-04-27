@@ -1,37 +1,12 @@
-import { ClientViewModelLevel1 } from './view-model/ClientViewModelLevel1';
-import { _assertUserPasswordInput } from './UiUtil';
-import { type UserPassword } from './view-model/ServerViewModelLevel1';
+import { ClientBase } from './ui/abstract/ClientBase';
+import { type UserNamePassword } from './ui/abstract/UserNamePasswordFormBase';
 
-class Level1Client {
-    private _model: ClientViewModelLevel1;
-    constructor() {
-        this._model = new ClientViewModelLevel1();
-    }
-    public initialize() {
-        this._onLogin = this._onLogin.bind(this);
-    }
-    private _onLogin(userName: string, password: string) {
-        try {
-            _assertUserPasswordInput(userName, password);
-            this.userPassword = {
-                name: userName,
-                password,
-            };
-        } catch (e) {
-            const error = e as Error;
-            if (error) {
-                alert(error.message);
-            } else {
-                throw e;
-            }
-        }
-    }
-    private set userPassword(value: UserPassword) {
-        this._model.message = JSON.stringify(value, null, 4);
+class Level1Client extends ClientBase {
+    encodeToMessage(userNamePassword: UserNamePassword): string {
+        return JSON.stringify(userNamePassword, null, 4);
     }
 }
 
 window.onload = () => {
-    const client = new Level1Client();
-    client.initialize();
+    new Level1Client();
 };

@@ -6,9 +6,9 @@ export interface UserNamePassword {
 }
 
 export abstract class UserNamePasswordFormBase {
-    abstract readonly ID_USER_NAME_INPUT: string;
-    abstract readonly ID_PASSWORD_INPUT: string;
-    abstract readonly ID_SUBMIT_BUTTON: string;
+    abstract get ID_USER_NAME_INPUT(): string;
+    abstract get ID_PASSWORD_INPUT(): string;
+    abstract get ID_SUBMIT_BUTTON(): string;
 
     /**
      * コンストラクター
