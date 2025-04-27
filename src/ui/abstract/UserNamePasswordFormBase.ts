@@ -50,8 +50,17 @@ export abstract class UserNamePasswordFormBase {
     private _registerButtonEvent(): void {
         const element = __safeRef<HTMLButtonElement>(this.ID_SUBMIT_BUTTON);
         element!.addEventListener('click', () => {
-            __assertUserPasswordInput(this.userName, this.password);
-            this.onSubmit(this.userNamePassword);
+            try {
+                __assertUserPasswordInput(this.userName, this.password);
+                this.onSubmit(this.userNamePassword);
+            } catch (e) {
+                const error = e as Error;
+                if (error) {
+                    alert(error.message);
+                } else {
+                    throw e;
+                }
+            }
         });
     }
     /**
