@@ -80,22 +80,3 @@ export const validCharacter = [
     'ょ',
     'っ',
 ];
-
-export function areValid(word: string): boolean {
-    return word.split('').every((char) => {
-        return validCharacter.includes(char);
-    });
-}
-
-export function encodeWord(word: string): number[] {
-    return word.split('').map((char) => {
-        return validCharacter.indexOf(char);
-    });
-}
-export function decodeWord(encoded: number[]): string {
-    return encoded
-        .map((index) => {
-            return validCharacter[index];
-        })
-        .join('');
-}

@@ -1,18 +1,171 @@
+/* ********************************************************
+ * 標準的な画面要素のスタイル
+ * ******************************************************** */
+/*
+ *　見出し1
+ */
 h1 {
+    /* ブロックスタイル　*/
     color: navy;
     background-color: lightblue;
-    padding: 0.1em 0.5em;
     border-radius: 0.25em;
+    /* 余白の調整 */
+    padding: 0.1em 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0;
 }
 
-div.role-selection {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+/*
+ *　見出し2
+ */
+h2 {
+    /* ブロックスタイル　*/
+    border-left: navy solid 1em;
+    border-bottom: navy solid 0.1em;
+    /* 余白の調整 */
+    padding: 0.25em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
-.role-item {
-    border: dotted 1.5px #ccc;
+/*
+ *　見出し3
+ */
+h3 {
+    /* ブロックスタイル　*/
+    border-bottom: navy dotted 0.1em;
+    /* 余白の調整 */
+    padding: 0.25em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+/* ********************************************************
+ * テーブルのスタイル
+ * ******************************************************** */
+table {
+    width: 80%;
+    border-collapse: collapse !important;
+    border-spacing: 0;
+}
+table th {
+    padding: 0.25em 1em;
+    background: #e9faf9;
+    border: solid 1px #778ca3;
+}
+table td {
+    padding: 0.25em 1em;
+    border: solid 1px #778ca3;
+}
+
+/* ********************************************************
+ * 標準コントロールのスタイル
+ * ******************************************************** */
+
+/**
+ * 入力コントロールのスタイル
+ */
+input[type='text'] {
+    font-size: large;
+}
+
+/**
+ * ボタンのスタイル
+ */
+button {
     border-radius: 0.5em;
-    padding: 0.5em;
+    font-size: large;
+    color: white;
+    background-color: navy;
+}
+button:hover {
+    font-size: large;
+    color: white;
+    background-color: blue;
+}
+
+/* ********************************************************
+ * カスタムスタイル
+ * ******************************************************** */
+/**
+ * ナビゲーションバー
+ */
+div.crumTrail {
+    font-size: small;
+    /* 余白の調整 */
+    padding: 0.1em 0.5em;
+    margin-bottom: 0;
+}
+/**
+ * 警告の見出し
+ */
+h2.warning {
+    /* ブロックスタイル　*/
+    border-left: crimson solid 1em;
+    border-bottom: crimson solid 0.1em;
+}
+
+/**
+ * コンテンツの分離線
+ */
+hr.contents-divider {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+/**
+ * コンテンツ終了後の線
+ */
+hr.bottom-line {
+    margin-top: 3em;
+}
+
+/**
+ * コピーライト
+ */
+div.copy-right {
+    text-align: right;
+    font-size: smaller;
+    color: gray;
+}
+
+/* ********************************************************
+ * クライアントページ独自スタイル
+ * ******************************************************** */
+div.login-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 0.5em;
+}
+div.login-form-item {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+div.login-form label {
+    font-size: small;
+}
+
+pre#sending-message-view {
+    border: lightgray solid 1px;
+    border-radius: 1em;
+    font-family: monospace;
+    margin: 1em;
+    padding: 1em;
+}
+
+div.link-container {
+    display: flex;
+}
+div.link-container-item {
+    /* ブロックスタイル */
+    border-radius: 1.5em;
+    background-color: honeydew;
+    width: 12em;
+    height: 10em;
+
+    /* 余白の調整 */
+    margin: 2em;
 }
