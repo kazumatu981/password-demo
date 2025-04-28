@@ -73,33 +73,24 @@ export class EasyHashProvider {
     }
 
     protected _hash(input: number[]): number[] {
-        // ハッシュの種
-        const seeds = [...this.seeds];
-
-        // ステップ1: 入力に対して、seedsを使った加重移動平均みたいなものを計算する
-        const weightedMovingAverage = input.map((_, i, array) =>
-            seeds
-                .map((seed, j) => __safeRef(array, i + j) * seed)
-                .reduce((acc, val) => acc + val, 0),
+        const sizeofHash = this.initialVector.length;
+        const sum = this.initialVector.map((initialValue, index) =>
+            input
+                .filter((_, i) => i % sizeofHash === index)
+                .reduce((a, b) => (a + b) % this.modulus, initialValue),
         );
 
-        const hash = this.initialVector
-            .map((initialValue, i) => {
-                // ステップ2: ハッシュのi番目の要素は、weightedMovingAverageのインデックス
-                // の剰余がi番目のものを足し合わせたものと。。。。。
-                const elementsResult = weightedMovingAverage
-                    .filter((_, j) => j % this.initialVector.length === i)
-                    .reduce((acc, value) => acc + value, 0);
-
-                return { initialValue, elementsResult };
-            })
-            .map(
-                // ステップ3: それにinitialVectorの要素を足したものをmodulusで割った余りを取る
-                ({ initialValue, elementsResult }) =>
-                    (initialValue + elementsResult) % this.modulus,
-            );
-
-        return hash;
+        return sum.map((_, indexOfSum) => {
+            return this.seeds
+                .map((seed, indexOfSeeds) => {
+                    return (
+                        (__safeRef(sum, indexOfSum + indexOfSeeds) *
+                            Math.pow(seed, indexOfSeeds)) %
+                        this.modulus
+                    );
+                })
+                .reduce((a, b) => (a + b) % this.modulus, 0);
+        });
     }
 }
 
