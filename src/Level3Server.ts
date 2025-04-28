@@ -1,116 +1,93 @@
-import { __assert } from './lib/core/Exceptions';
-import { type UserHashedPassword } from './view-model/ServerViewModelLevel2';
-
-import {
-    ServerViewModelLevel3,
-    type UserUglifiedPassword,
-} from './view-model/ServerViewModelLevel3';
-import { type UserPassword } from './view-model/ServerViewModelLevel1';
-import { WordFingerPrinter } from './lib/WordFingerPrinter';
-import { CharacterEncoder } from './lib/core/CharacterEncoder';
-import { validCharacter } from './data/character';
 import { CommonWordGenerator } from './lib/CommonWordGenerator';
+import { ServerBase } from './ui/abstract/ServerBase';
+import { __safeRef } from './ui/common/UiUtil';
+import { defaultUsers } from './data/users';
 import { commonWords } from './data/common-words';
-CharacterEncoder.validCharacter = validCharacter;
+import { UserNamePassword } from './ui/abstract/UserNamePasswordFormBase';
+import { WordFingerPrinter } from './lib/WordFingerPrinter';
 
-const userDb: UserPassword[] = [
-    {
-        name: 'たろう',
-        password: 'ももがすき',
-    },
-    {
-        name: 'かぐや',
-        password: 'たけからうまれた',
-    },
-    {
-        name: 'うらしま',
-        password: 'かめをたすけた',
-    },
-];
+const seed = new Date().getSeconds() / 60;
+interface UglifiedUserPassword {
+    name: string;
+    hashedPassword: string;
+    uglifiedPassword: string;
+}
+const DEFAULT_SOUP = 'ひでんのすぅぷ';
 
-const wordGenerator = new CommonWordGenerator({
-    dictionary: commonWords,
-    seed: 0.1234,
-});
+class ServerViewModelLevel3 extends ServerBase<UglifiedUserPassword> {
+    wordGenerator = new CommonWordGenerator({
+        dictionary: commonWords,
+        seed,
+        autoGenerate: false,
+    });
+    constructor(userNamePasswords: UserNamePassword[]) {
+        super(userNamePasswords);
+        this._initialize();
+    }
+    get ID_RANDOM_QUOTE_VIEW(): string {
+        return 'random-quote-view';
+    }
+    get ID_GET_RANDOM_QUOTE_BUTTON(): string {
+        return 'get-random-quote-button';
+    }
+    get columnNames(): string[] {
+        return ['name', 'hashedPassword', 'uglifiedPassword'];
+    }
+    get randomQuote(): string {
+        const element = __safeRef<HTMLElement>(this.ID_RANDOM_QUOTE_VIEW);
+        return element!.innerText;
+    }
+    set randomQuote(quote: string) {
+        const element = __safeRef<HTMLElement>(this.ID_RANDOM_QUOTE_VIEW);
+        element!.innerText = quote;
+        this._renderUserTable(true);
+    }
 
-function getUglifiedTable(
-    hashedPasswordDb: UserHashedPassword[],
-    randomQuote: string,
-): UserUglifiedPassword[] {
-    return hashedPasswordDb.map((user) => {
+    _hashUserNamePassword(
+        userNamePassword: UserNamePassword,
+    ): UglifiedUserPassword {
         const fingerPrinter = new WordFingerPrinter({
-            pepper: user.name,
-            soup: 'ひみつです',
+            pepper: userNamePassword.name,
+            soup: DEFAULT_SOUP,
         });
-        const uglifiedPassword = fingerPrinter.applySalt(
-            user.hashedPassword,
-            randomQuote,
-        );
+        const hashedPassword = fingerPrinter.hash(userNamePassword.password);
+        const uglifiedPassword =
+            this.randomQuote.length === 0
+                ? hashedPassword
+                : fingerPrinter.applySalt(hashedPassword, this.randomQuote);
         return {
-            name: user.name,
-            hashedPassword: user.hashedPassword,
+            name: userNamePassword.name,
+            hashedPassword,
             uglifiedPassword,
         };
-    });
-}
-window.onload = () => {
-    let randomQuote = wordGenerator.nextWord;
-    const hashedUserDb: UserHashedPassword[] = userDb.map((user) => {
+    }
+    _updateHash(entry: UglifiedUserPassword): UglifiedUserPassword {
         const fingerPrinter = new WordFingerPrinter({
-            pepper: user.name,
-            soup: 'ひみつです',
+            pepper: entry.name,
+            soup: DEFAULT_SOUP,
         });
-        const hashedPassword = fingerPrinter.hash(user.password);
-        return {
-            name: user.name,
-            hashedPassword,
-        };
-    });
-    const model = new ServerViewModelLevel3();
-    model.randomQuote = randomQuote;
-    model.onRegister = (userName: string, password: string) => {
-        try {
-            __assert(userName.length !== 0, 'ユーザ名を指定してください');
-            __assert(
-                CharacterEncoder.areValidCharacters(userName),
-                'ユーザ名が不正です',
-            );
-            __assert(password.length !== 0, 'ユーザ名を指定してください');
-            __assert(
-                CharacterEncoder.areValidCharacters(password),
-                'パスワードが不正です',
-            );
-            const fingerPrinter = new WordFingerPrinter({
-                pepper: userName,
-                soup: 'ひみつです',
-            });
-            const hashedPassword = fingerPrinter.hash(password);
-            hashedUserDb.push({
-                name: userName,
-                hashedPassword,
-            });
-            const uglifiedPassword = getUglifiedTable(
-                hashedUserDb,
-                randomQuote,
-            );
-            model.renderUserTable(uglifiedPassword);
-            model.clearUserName();
-            model.clearPassword();
-        } catch (e) {
-            const error = e as Error;
-            if (error) {
-                alert(error.message);
-            } else {
-                throw e;
-            }
-        }
-    };
-    model.onGetRandomQuote = () => {
-        randomQuote = wordGenerator.nextWord;
-        model.randomQuote = randomQuote;
-        const uglifiedPassword = getUglifiedTable(hashedUserDb, randomQuote);
-        model.renderUserTable(uglifiedPassword);
-    };
-    const uglifiedPassword = getUglifiedTable(hashedUserDb, randomQuote);
-    model.renderUserTable(uglifiedPassword);
+        entry.uglifiedPassword = fingerPrinter.applySalt(
+            entry.hashedPassword,
+            this.randomQuote,
+        );
+        return entry;
+    }
+    _initialize() {
+        this.randomQuote = this.wordGenerator.nextWord;
+        this._registerGetRandomQuoteButton();
+    }
+
+    _registerGetRandomQuoteButton() {
+        const element = __safeRef<HTMLButtonElement>(
+            this.ID_GET_RANDOM_QUOTE_BUTTON,
+        );
+        element!.addEventListener('click', () => this._onGetRandomQuote());
+    }
+    _onGetRandomQuote() {
+        this.randomQuote = this.wordGenerator.nextWord;
+    }
+}
+
+window.onload = () => {
+    new ServerViewModelLevel3(defaultUsers);
 };

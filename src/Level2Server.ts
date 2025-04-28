@@ -1,93 +1,43 @@
-import {
-    ServerViewModelLevel2,
-    type UserHashedPassword,
-} from './view-model/ServerViewModelLevel2';
-import { type UserPassword } from './view-model/ServerViewModelLevel1';
+import { defaultUsers } from './data/users';
 import { WordFingerPrinter } from './lib/WordFingerPrinter';
-import { _assertUserPasswordInput } from './UiUtil';
+import { ServerBase } from './ui/abstract/ServerBase';
+import { type UserNamePassword } from './ui/abstract/UserNamePasswordFormBase';
 
-const defaultUsers: UserPassword[] = [
-    {
-        name: 'たろう',
-        password: 'ももがすき',
-    },
-    {
-        name: 'かぐや',
-        password: 'たけからうまれた',
-    },
-    {
-        name: 'うらしま',
-        password: 'かめをたすけた',
-    },
-];
+interface UserHashedPassword {
+    name: string;
+    hashedPassword: string;
+}
 
-class Level2Server {
-    private _userDb: UserHashedPassword[];
-    private _defaultSoup: string = 'ひみつです';
-    private _model: ServerViewModelLevel2;
-    constructor(userDb: UserPassword[], defaultSoup?: string) {
-        this._defaultSoup = defaultSoup ?? this._defaultSoup;
-        this._userDb = userDb.map((user) => {
-            return {
-                name: user.name,
-                hashedPassword: this._calculateFingerPrint(
-                    user.name,
-                    user.password,
-                ),
-            };
-        });
-        this._model = new ServerViewModelLevel2();
+const DEFAULT_SOUP = 'ひでんのすぅぷ';
+
+class Level2Server extends ServerBase<UserHashedPassword> {
+    get columnNames(): string[] {
+        return ['name', 'hashedPassword'];
     }
 
-    public initialize() {
-        this._model.onRegister = this._onRegister.bind(this);
-        this._model.renderUserTable(this._userDb);
-    }
-    private _calculateFingerPrint(userName: string, password: string) {
-        const fingerPrinter = new WordFingerPrinter({
-            pepper: userName,
-            soup: this._defaultSoup,
-        });
-        return fingerPrinter.hash(password);
-    }
-    private _onRegister(userName: string, password: string) {
-        try {
-            _assertUserPasswordInput(userName, password);
-            this._appendUser({
-                name: userName,
-                password,
-            });
-            this._updateTable();
-            this._clearInput();
-        } catch (e) {
-            const error = e as Error;
-            if (error) {
-                alert(error.message);
-            } else {
-                throw e;
-            }
-        }
-    }
-    private _appendUser(user: UserPassword) {
-        const hashedUserInfo = {
-            name: user.name,
-            hashedPassword: this._calculateFingerPrint(
-                user.name,
-                user.password,
-            ),
+    _hashUserNamePassword(
+        userNamePassword: UserNamePassword,
+    ): UserHashedPassword {
+        return {
+            name: userNamePassword.name,
+            hashedPassword: this._calculateFingerPrint(userNamePassword),
         };
-        this._userDb.push(hashedUserInfo);
     }
-    private _updateTable() {
-        this._model.renderUserTable(this._userDb);
-    }
-    private _clearInput() {
-        this._model.clearUserName();
-        this._model.clearPassword();
+
+    /**
+     * ユーザ名とパスワードを用いてハッシュ化された指紋を計算します。
+     * @param userNamePassword ユーザ名とパスワードの組
+     * @returns ハッシュ化された指紋文字列
+     */
+    private _calculateFingerPrint(userNamePassword: UserNamePassword) {
+        const fingerPrinter = new WordFingerPrinter({
+            pepper: userNamePassword.name,
+            soup: DEFAULT_SOUP,
+        });
+        return fingerPrinter.hash(userNamePassword.password);
     }
 }
 
 window.onload = () => {
     const server = new Level2Server(defaultUsers);
-    server.initialize();
 };

@@ -7,8 +7,19 @@ import {
 export abstract class ServerBase<
     TStorageEntity,
 > extends UserNamePasswordFormBase {
-    abstract readonly USER_TABLE_BODY: string;
-    abstract readonly columnNames: string;
+    get ID_USER_TABLE_BODY(): string {
+        return 'user-table-body';
+    }
+    get ID_USER_NAME_INPUT(): string {
+        return 'new-username-input';
+    }
+    get ID_PASSWORD_INPUT(): string {
+        return 'new-password-input';
+    }
+    get ID_SUBMIT_BUTTON(): string {
+        return 'register-button';
+    }
+    abstract get columnNames(): string[];
     private _userDb: TStorageEntity[] = [];
 
     /**
@@ -42,8 +53,11 @@ export abstract class ServerBase<
      * ユーザーテーブルを再描画します
      *(USER_TABLE_BODYに描画)
      */
-    protected _renderUserTable(): void {
-        const tBody = __safeRef<HTMLElement>(this.USER_TABLE_BODY);
+    protected _renderUserTable(updateHash: boolean = false): void {
+        const tBody = __safeRef<HTMLElement>(this.ID_USER_TABLE_BODY);
+        if (updateHash) {
+            this._userDb = this._userDb.map((item) => this._updateHash(item));
+        }
         while (tBody.firstChild) {
             tBody.removeChild(tBody.firstChild);
         }
@@ -69,4 +83,6 @@ export abstract class ServerBase<
     abstract _hashUserNamePassword(
         userNamePassword: UserNamePassword,
     ): TStorageEntity;
+
+    abstract _updateHash(entry: TStorageEntity): TStorageEntity;
 }
