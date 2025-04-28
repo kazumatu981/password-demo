@@ -12,6 +12,9 @@ class Level1Server extends ServerBase<UserNamePassword> {
     ): UserNamePassword {
         return userNamePassword;
     }
+    _updateHash(entry: UserNamePassword): UserNamePassword {
+        return entry;
+    }
 }
 
 window.onload = () => {
