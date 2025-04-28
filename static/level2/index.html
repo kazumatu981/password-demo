@@ -11,7 +11,7 @@
         <title>パスワード認証 level 2</title>
     </head>
     <body>
-        <h1>level2</h1>
+        <h1>level1</h1>
         <div class="crumTrail">
             <a href="../index.html"><span class="crum">Top</span></a>
             &gt;
@@ -21,32 +21,24 @@
         <h2>概要</h2>
         <div class="descriptions">
             <p>
-                最も簡単なパスワードです。
-                サーバ側にユーザ名とパスワードをそのまま記憶しています。
-                ユーザ名とパスワードが一致することを確認することで、システムの使用を許可します。
+                サーバにハッシュ値だけを保存しておきます。
+                こうすることで万が一サーバ側のユーザ情報が盗まれてもハッカーがデータを盗み見ることはできません。
+                この手法の特徴は、たとえ管理者でもユーザのパスワードを知ることができないという特徴があります。
             </p>
         </div>
-        <div class="link-container">
-            <div class="link-container-item">
-                <div class="link-container-item-icon">
-                    <i class="fa-solid fa-laptop-code"></i>
-                </div>
-                <div class="link-container-item-text">クライアント</div>
-            </div>
-            <div class="link-container-item">
-                <div class="link-container-item-icon">
-                    <i class="fa-solid fa-network-wired"></i>
-                </div>
-                <div class="link-container-item-text">ユーザ情報管理サーバ</div>
-            </div>
-        </div>
-        <h2 class="warning">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            考えられるリスク
-        </h2>
         <ul>
-            <li>通信経路で傍受されるかもしれない</li>
-            <li>サーバのテーブルを全て見られるかもしれない</li>
+            <li>
+                <a href="./client.html">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    クライアント
+                </a>
+            </li>
+            <li>
+                <a href="./server.html">
+                    <i class="fa-solid fa-network-wired"></i>
+                    ユーザ情報管理サーバ
+                </a>
+            </li>
         </ul>
         <hr class="bottom-line" />
         <div class="copy-right">
