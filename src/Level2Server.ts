@@ -36,6 +36,10 @@ class Level2Server extends ServerBase<UserHashedPassword> {
         });
         return fingerPrinter.hash(userNamePassword.password);
     }
+
+    _updateHash(entry: UserHashedPassword): UserHashedPassword {
+        return entry;
+    }
 }
 
 window.onload = () => {
