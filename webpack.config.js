@@ -4,6 +4,7 @@ const __projectRoot = process.cwd(); // __dirnameはNode.jsのグローバル変
 
 export default {
     entry: {
+        hash: './src/HashCalculator.ts',
         client_level1: './src/Level1Client.ts',
         server_level1: './src/Level1Server.ts',
         client_level2: './src/Level2Client.ts',
